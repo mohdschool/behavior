@@ -104,9 +104,49 @@
       transform: translateY(-2px);
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     }
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .header-buttons {
+      display: flex;
+      gap: 10px;
+    }
+    .header-buttons button {
+      background: linear-gradient(135deg, #4A90E2, #50A5E2);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .header-buttons button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
   </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
+  <!-- الهيدر -->
+  <div class="header">
+    <h1 class="text-xl font-bold text-gold-500">منصة سلوك</h1>
+    <div class="header-buttons">
+      <button id="returnButton">
+        العودة إلى منصة تواصل
+      </button>
+    </div>
+  </div>
+
   <div class="card rounded-lg shadow-2xl p-8 max-w-md w-full text-center mt-20">
     <!-- شعار المدرسة -->
     <img src="https://j.top4top.io/p_3327lje811.jpg" alt="شعار المدرسة" class="mx-auto w-28 h-28 rounded-full shadow-md mb-6 logo-glow">
@@ -117,7 +157,7 @@
 
     <!-- شريط تمرير مواعيد التقييم -->
     <div class="marquee">
-      <span>🌟 مدرسة محمد بن سليمان الغافري ترحب بكم، حيث تتجدد الأفكار وتتغير الطرق، ويبقى الهدف ثابتًا واضحًا جليًا: التقدم بخطوات ثابتة نحو آفاق التقدم المعرفي بأحدث الأساليب والتقنيات. 🌟</span>
+      <span>🌟 منصة سلوك تهدف إلى تعزيز السلوك الإيجابي ورصد التطور السلوكي للطلبة، حيث نسعى دائمًا لبناء جيل واعٍ ومتميز. 🌟</span>
     </div>
 
     <!-- إدخال الرقم المدني للطالب -->
@@ -127,11 +167,6 @@
     <!-- زر البحث -->
     <button id="fetchDataButton" class="w-full py-3 rounded-lg button-primary focus:outline-none">
       عرض السلوكيات
-    </button>
-
-    <!-- زر العودة إلى منصة تواصل -->
-    <button id="returnButton" class="w-full py-3 rounded-lg button-return mt-4 focus:outline-none">
-      العودة إلى منصة تواصل
     </button>
 
     <!-- عرض النتائج -->
