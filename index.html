@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>منصة سلوك</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+     body {
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      font-family: 'El Messiri', sans-serif;
+      color: #fff;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    }
+    .logo-glow {
+      filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.7));
+    }
+    .marquee {
+      white-space: nowrap;
+      overflow: hidden;
+      box-sizing: border-box;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 10px;
+      border-radius: 10px;
+      margin: 20px 0;
+      font-size: 1.1rem;
+    }
+    .marquee span {
+      display: inline-block;
+      padding-left: 100%;
+      animation: marquee 30s linear infinite;
+    }
+    @keyframes marquee {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    .data-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 10px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .data-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    .data-title {
+      color: #ffd700;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    .data-value {
+      color: #fff;
+      font-size: 1.1rem;
+    }
+    .footer {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 15px;
+      border-radius: 12px;
+      margin-top: 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #fff;
+    }
+    .input-field {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+    }
+    .input-field:focus {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: #ffd700;
+    }
+    .button-primary {
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      color: #1e3c72;
+      font-weight: bold;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .button-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+  <div class="card rounded-lg shadow-2xl p-8 max-w-md w-full text-center mt-20">
+    <!-- شعار المدرسة -->
+    <img src="https://j.top4top.io/p_3327lje811.jpg" alt="شعار المدرسة" class="mx-auto w-28 h-28 rounded-full shadow-md mb-6 logo-glow">
+
+    <!-- اسم المنصة والمدرسة -->
+    <h1 class="text-3xl font-bold text-gold-500 logo-glow">منصة سلوك</h1>
+    <p class="text-gray-300 text-sm mb-6 logo-glow">مدرسة محمد بن سليمان الغافري</p>
+
+    <!-- شريط تمرير مواعيد التقييم -->
+    <div class="marquee">
+      <span>🌟 مدرسة محمد بن سليمان الغافري ترحب بكم، حيث تتجدد الأفكار وتتغير الطرق، ويبقى الهدف ثابتًا واضحًا جليًا: التقدم بخطوات ثابتة نحو آفاق التقدم المعرفي بأحدث الأساليب والتقنيات. 🌟</span>
+    </div>
+
+    <!-- إدخال الرقم المدني للطالب -->
+    <label for="studentId" class="block text-lg font-medium text-gold-500">أدخل الرقم المدني للطالب:</label>
+    <input type="text" id="studentId" class="mt-2 mb-6 w-full p-3 rounded-lg input-field focus:outline-none">
+
+    <!-- زر البحث -->
+    <button id="fetchDataButton" class="w-full py-3 rounded-lg button-primary focus:outline-none">
+      عرض السلوكيات
+    </button>
+
+    <!-- عرض النتائج -->
+    <div id="result" class="mt-8 text-right"></div>
+
+    <!-- تذييل المنصة -->
+    <div class="footer">
+      جميع الحقوق محفوظة © لإدارة مدرسة محمد بن سليمان الغافري
+    </div>
+  </div>
+
+  <script>
+    // دالة لجلب البيانات وعرضها
+    document.getElementById('fetchDataButton').addEventListener('click', async () => {
+      const studentId = document.getElementById('studentId').value.trim();
+      const resultDiv = document.getElementById('result');
+
+      if (!studentId) {
+        alert('يرجى إدخال الرقم المدني للطالب.');
+        return;
+      }
+
+      const behaviorLink = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQlLwgTemkiKbB9TXOpqVFkkWKKPO5GeB1KrMiKqpJD3cJaHHTseH38gw5IoaW-e5UYS9Yeo-5TLY7n/pub?gid=1539188647&single=true&output=csv";
+
+      resultDiv.innerHTML = '<p class="text-blue-400 font-semibold">🔄 جاري تحميل البيانات...</p>';
+
+      try {
+        const response = await fetch(behaviorLink);
+        const csvData = await response.text();
+        const rows = csvData.split('\n').map(row => row.split(','));
+
+        const headers = rows[0];
+        const studentRow = rows.find(row => row[1].trim() === studentId);
+
+        if (!studentRow) {
+          resultDiv.innerHTML = '<p class="text-red-400 font-semibold">❌ لم يتم العثور على بيانات لهذا الطالب.</p>';
+          return;
+        }
+
+        // إنشاء عرض عمودي للبيانات
+        let dataHTML = `<h2 class="text-xl font-bold text-gold-500 mb-6">📌 السلوكيات المسجلة:</h2>`;
+        headers.forEach((header, index) => {
+          if (header && studentRow[index]) {
+            dataHTML += `
+              <div class="data-card">
+                <div class="data-title">${header}</div>
+                <div class="data-value">${studentRow[index]}</div>
+              </div>
+            `;
+          }
+        });
+
+        resultDiv.innerHTML = dataHTML;
+
+      } catch (error) {
+        resultDiv.innerHTML = '<p class="text-red-400 font-semibold">⚠️ حدث خطأ أثناء تحميل البيانات.</p>';
+      }
+    });
+  </script>
+</body>
+</html>
